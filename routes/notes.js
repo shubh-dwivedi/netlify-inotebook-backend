@@ -26,8 +26,9 @@ router.post('/addnote', fetchuser, [
 ], async (event, res)=> {
     // If there are errors, return bad request and errors
     const req = JSON.parse(event.body);
-    const errors = validationResult(req);
+    const errors = validationResult({body: req});
     if (!errors.isEmpty()) {
+        console.log(req)
       return res.status(400).json({ errors: errors.array() });
     }
     try {
@@ -51,7 +52,7 @@ router.put('/updatenote/:id', fetchuser, [
     body("description", "Please enter min 5 characters in description").isLength({ min: 5 })
 ], async (event, res)=> {
     const req = JSON.parse(event.body);
-    const errors = validationResult(req);
+    const errors = validationResult({body: req});
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
